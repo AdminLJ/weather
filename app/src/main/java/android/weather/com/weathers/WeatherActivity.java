@@ -6,6 +6,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -14,6 +16,7 @@ import android.weather.com.weathers.gson.Forecast;
 import android.weather.com.weathers.gson.Weather;
 import android.weather.com.weathers.util.HttpUtil;
 import android.weather.com.weathers.util.Utility;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -48,7 +51,10 @@ public class WeatherActivity extends AppCompatActivity {
     //背景图片
     private ImageView bingPicImg;
     //刷新天气
-    private SwipeRefreshLayout swipeRefresh;
+    public SwipeRefreshLayout swipeRefresh;
+    //左滑动菜单
+    public DrawerLayout drawerLayout;
+    private Button navButtom;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +83,9 @@ public class WeatherActivity extends AppCompatActivity {
         //自动刷新天气
         swipeRefresh = (SwipeRefreshLayout)findViewById(R.id.swipe_refresh);
         swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
+        //初始化左滑动栏
+        drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        navButtom = (Button) findViewById(R.id.nav_button);
         //加载数据
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String weatherString = prefs.getString("weathers",null);
@@ -105,6 +114,13 @@ public class WeatherActivity extends AppCompatActivity {
         }else {
             loadBingPic();
         }
+        //设置左滑动监听事件
+        navButtom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
     }
 
     /**加载必应每日一图*/
