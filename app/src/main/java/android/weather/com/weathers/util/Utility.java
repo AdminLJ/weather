@@ -88,7 +88,7 @@ public class Utility {
      * */
     public static Weather handleWeatherResponse(String response){
         try {
-            Log.d("handleWeatherResponse", "JSON 数据解析成 Weather 实体类: "+response);
+//            Log.d("handleWeatherResponse", "JSON 数据解析成 Weather 实体类: "+response);
             JSONObject jsonObject = new JSONObject(response);
             JSONArray jsonArray = jsonObject.getJSONArray("HeWeather");
             String weatherContent = jsonArray.getJSONObject(0).toString();
